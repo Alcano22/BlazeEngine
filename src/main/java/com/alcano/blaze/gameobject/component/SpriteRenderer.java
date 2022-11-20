@@ -8,6 +8,8 @@ public class SpriteRenderer extends Component {
 
     public Sprite sprite;
     public Color color;
+    public boolean flipX;
+    public boolean flipY;
 
     public SpriteRenderer(Sprite sprite, Color color) {
         this.sprite = sprite;
@@ -15,7 +17,7 @@ public class SpriteRenderer extends Component {
     }
 
     public SpriteRenderer(Sprite sprite) {
-        this(sprite, Color.WHITE);
+        this(sprite, null);
     }
 
     public SpriteRenderer(Color color) {
@@ -32,11 +34,14 @@ public class SpriteRenderer extends Component {
         float radians = (float) Math.toRadians(-this.transform.rotation);
         ((Graphics2D) g).rotate(radians, this.transform.position.x * this.getCamera().fov, this.transform.position.y * this.getCamera().fov);
 
-        g.setColor(this.color);
         if (this.sprite == null) {
+            g.setColor(this.color);
             g.fillRect(x, y, width, height);
+        } else if (this.color != null) {
+            g.drawImage(this.sprite.flipped(this.flipX, !this.flipY)
+                    .recolored(this.color).texture, x, y, width, height, null);
         } else {
-            g.drawImage(this.sprite.texture, x, y, width, height, this.color, null);
+            g.drawImage(this.sprite.flipped(this.flipX, !this.flipY).texture, x, y, width, height, null);
         }
 
         ((Graphics2D) g).rotate(-radians, this.transform.position.x * this.getCamera().fov, this.transform.position.y * this.getCamera().fov);

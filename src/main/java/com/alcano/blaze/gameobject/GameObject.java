@@ -6,6 +6,7 @@ import com.alcano.blaze.scene.SceneManager;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameObject {
@@ -46,22 +47,22 @@ public class GameObject {
         });
     }
 
-    public Component[] getComponents(Class<Component> componentClass) {
-        List<Component> matchingComponents = new ArrayList<>();
+    public <T extends Component> T[] getComponents(Class<T> componentClass) {
+        List<T> matchingComponents = new ArrayList<>();
         for (Component component : this.components) {
             if (!component.getClass().isAssignableFrom(componentClass)) continue;
 
-            matchingComponents.add(component);
+            matchingComponents.add(componentClass.cast(component));
         }
 
-        return matchingComponents.toArray(new Component[0]);
+        return (T[]) matchingComponents.toArray(new Component[0]);
     }
 
-    public Component getComponent(Class<Component> componentClass) {
+    public <T extends Component> T getComponent(Class<T> componentClass) {
         return getComponents(componentClass)[0];
     }
 
-    public Component addComponent(Component component) {
+    public <T extends Component> T addComponent(T component) {
         if (!this.components.contains(component)) {
             this.components.add(component);
 
@@ -75,11 +76,11 @@ public class GameObject {
         this.components.remove(component);
     }
 
-    public void removeComponent(Class<Component> componentClass) {
+    public void removeComponent(Class<? extends Component> componentClass) {
         this.removeComponent(this.getComponents(componentClass)[0]);
     }
 
-    public void removeComponents(Class<Component> componentClass) {
+    public void removeComponents(Class<? extends Component> componentClass) {
         for (Component component : this.getComponents(componentClass)) {
             this.removeComponent(component);
         }

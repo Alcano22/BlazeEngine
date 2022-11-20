@@ -2,6 +2,7 @@ package com.alcano.blaze.core;
 
 import com.alcano.blaze.math.Vector2;
 import com.alcano.blaze.scene.SceneManager;
+import com.alcano.blaze.util.Debug;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +32,8 @@ public class GameWindow extends JFrame {
         this.setUndecorated(true);
 
         this.setVisible(true);
+
+        Debug.log("Started game window.");
     }
 
     public Vector2 getWindowSize() {

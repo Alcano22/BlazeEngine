@@ -2,8 +2,8 @@ package com.alcano.blaze.core;
 
 import com.alcano.blaze.api.BlazeGame;
 import com.alcano.blaze.math.Vector2;
-import com.alcano.blaze.scene.Scene;
 import com.alcano.blaze.scene.SceneManager;
+import com.alcano.blaze.util.Debug;
 import com.alcano.blaze.util.Input;
 import com.alcano.blaze.util.KeyCode;
 import com.alcano.blaze.util.Time;
@@ -27,8 +27,6 @@ public class Engine {
         this.settings = game.getSettings();
         this.sceneManager = new SceneManager();
         this.gameWindow = new GameWindow();
-
-        new Scene("Game");
 
         game.createScenes();
         game.init();
@@ -74,7 +72,7 @@ public class Engine {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                Debug.log("FPS: " + frames);
                 frames = 0;
             }
         }
