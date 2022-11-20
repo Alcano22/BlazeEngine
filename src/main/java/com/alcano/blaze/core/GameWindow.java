@@ -9,7 +9,7 @@ import java.awt.image.BufferStrategy;
 
 public class GameWindow extends JFrame {
 
-    private final Canvas canvas;
+    public final Canvas canvas;
 
     public GameWindow() {
         Engine.Settings settings = Engine.get().settings;

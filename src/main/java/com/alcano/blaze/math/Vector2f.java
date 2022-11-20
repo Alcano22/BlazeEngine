@@ -19,6 +19,10 @@ public class Vector2f {
         this(x, 0f);
     }
 
+    public Vector2f() {
+        this(0f, 0f);
+    }
+
     public Vector2f(Point point) {
         this(point.x, point.y);
     }
@@ -27,12 +31,23 @@ public class Vector2f {
         this(dimension.width, dimension.height);
     }
 
-    public Vector2f() {
-        this(0f, 0f);
-    }
-
     public Vector2f(Vector2 vec2) {
         this(vec2.x, vec2.y);
+    }
+
+    public static Vector2f moveTowards(Vector2f a, Vector2f b, float t) {
+        float dx = b.x - a.x;
+        float dy = b.y - a.y;
+        float dir = (float) Math.atan2(dy, dx);
+        float x = a.x + (t * (float) Math.cos(dir));
+        float y = a.y + (t * (float) Math.sin(dir));
+        return new Vector2f(x, y);
+    }
+
+    public static Vector2f lerp(Vector2f a, Vector2f b, float t) {
+        float x = Mathf.lerp(a.x, b.x, t);
+        float y = Mathf.lerp(a.y, b.y, t);
+        return new Vector2f(x, y);
     }
 
     public Vector2f add(float x, float y) {
@@ -141,6 +156,10 @@ public class Vector2f {
 
     public Dimension toDimension() {
         return new Vector2(this).toDimension();
+    }
+
+    public String toString() {
+        return "(" + this.x + " " + this.y + ")";
     }
 
 }

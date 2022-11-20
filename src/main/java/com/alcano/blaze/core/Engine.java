@@ -5,9 +5,8 @@ import com.alcano.blaze.math.Vector2;
 import com.alcano.blaze.scene.Scene;
 import com.alcano.blaze.scene.SceneManager;
 import com.alcano.blaze.util.Input;
+import com.alcano.blaze.util.KeyCode;
 import com.alcano.blaze.util.Time;
-
-import java.awt.event.KeyEvent;
 
 public class Engine {
 
@@ -57,14 +56,16 @@ public class Engine {
         double numTicks = 60.0;
         double ns = 1000000000 / numTicks;
         long timer = System.currentTimeMillis();
+        double delta = 0.0;
         int frames = 0;
         while (this.running) {
             long now = System.nanoTime();
-            Time.deltaTime += (now - last) / ns;
+            delta += (now - last) / ns;
+            Time.deltaTime = (float) delta;
             last = now;
-            while (Time.deltaTime >= 1) {
+            while (delta >= 1) {
                 this.update();
-                Time.deltaTime--;
+                delta--;
             }
             if (this.running) {
                 this.render();
@@ -82,12 +83,13 @@ public class Engine {
     }
 
     public void update() {
-        this.gameWindow.requestFocus();
+        this.gameWindow.canvas.requestFocus();
 
-        if (Input.getKey(KeyEvent.VK_ESCAPE)) {
+        if (Input.getKeyUp(KeyCode.ESCAPE) && this.settings.debug) {
             System.exit(0);
         }
 
+        Input.get().update();
         this.sceneManager.update();
     }
 

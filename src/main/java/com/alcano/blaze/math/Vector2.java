@@ -142,4 +142,8 @@ public class Vector2 {
     public Dimension toDimension() {
         return new Dimension(this.x, this.y);
     }
+
+    public String toString() {
+        return "(" + this.x + " " + this.y + ")";
+    }
 }
